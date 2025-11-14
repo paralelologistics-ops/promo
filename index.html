@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BLACK FRIDAY PARALELO | HASTA 60% OFF + ENVÍO GRATIS</title>
   <style>
+    /* Tus estilos actuales aquí (sin cambios) */
     :root {
       --primary: #E91E63;
       --secondary: #B71C1C;
@@ -229,9 +230,9 @@
     
     .current-price {
       font-weight: bold;
-      color: var(--black); /* CAMBIADO A NEGRO */
+      color: var(--black);
       font-size: 1.3rem;
-      background: var(--white); /* FONDO BLANCO PARA MEJOR CONTRASTE */
+      background: var(--white);
       padding: 2px 6px;
       border-radius: 4px;
     }
@@ -247,7 +248,7 @@
     }
     
     .free-shipping {
-      background-color: var(--black); /* CAMBIADO A NEGRO */
+      background-color: var(--black);
       color: var(--white);
       padding: 0.5rem;
       border-radius: 4px;
@@ -260,7 +261,7 @@
     
     .buy-button {
       display: block;
-      background: var(--black); /* CAMBIADO A NEGRO */
+      background: var(--black);
       color: var(--white);
       text-align: center;
       padding: 0.75rem;
@@ -309,6 +310,15 @@
       background: var(--gray-dark);
       border-radius: 8px;
       margin: 1rem;
+    }
+
+    .update-notice {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      display: none;
     }
     
     @media (max-width: 768px) {
@@ -364,6 +374,10 @@
     </div>
   </div>
 
+  <div class="update-notice" id="updateNotice">
+    ✅ Catálogo actualizado - Última actualización: <span id="lastUpdate"></span>
+  </div>
+
   <div class="search-container">
     <input type="text" id="search-input" placeholder="🔍 Buscar productos...">
   </div>
@@ -403,33 +417,45 @@
     
     // Actualizar la cuenta regresiva cada segundo
     const countdownTimer = setInterval(updateCountdown, 1000);
-    updateCountdown(); // Ejecutar inmediatamente
+    updateCountdown();
+
+    // Función para mostrar última actualización
+    function showUpdateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-CO', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById('lastUpdate').textContent = timeString;
+      
+      const notice = document.getElementById('updateNotice');
+      notice.style.display = 'block';
+      setTimeout(() => {
+        notice.style.display = 'none';
+      }, 5000);
+    }
     
     // Función para cargar productos desde Google Sheets
     async function loadProducts() {
       try {
-        // Reemplaza esta URL con la URL de tu Google Sheets publicada
-        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A'; // Cambia esto por el ID de tu hoja
-        const sheetName = 'Promo'; // Nombre de la pestaña
-        const apiKey = 'AIzaSyAn_p-H3rZlyEs7Wb7IOmEvbHoa6rBFBFU'; // Necesitarás una API key de Google
+        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A';
+        const sheetName = 'Promo';
+        const apiKey = 'AIzaSyAn_p-H3rZlyEs7Wb7IOmEvbHoa6rBFBFU';
         
-        // URL para obtener los datos de la hoja en formato JSON
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+        // Agregar timestamp para evitar cache
+        const timestamp = new Date().getTime();
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}&timestamp=${timestamp}`;
         
         const response = await fetch(url);
         const data = await response.json();
         
-        // Procesar los datos
         const rows = data.values;
         if (!rows || rows.length < 2) {
           document.getElementById('product-container').innerHTML = '<div class="error">No se encontraron productos</div>';
           return;
         }
         
-        // Obtener encabezados
-        const headers = rows[0];
-        
-        // Crear array de productos
         const productos = [];
         for (let i = 1; i < rows.length; i++) {
           const row = rows[i];
@@ -451,6 +477,7 @@
         
         renderProducts(productos);
         setupSearch(productos);
+        showUpdateTime(); // Mostrar hora de actualización
         
       } catch (error) {
         console.error('Error cargando productos:', error);
@@ -519,9 +546,17 @@
         }, 300);
       });
     }
+
+    // Función para actualización automática cada 5 minutos
+    function autoRefreshData() {
+      setInterval(loadProducts, 300000); // 300,000 ms = 5 minutos
+    }
     
     // Cargar productos cuando la página esté lista
-    document.addEventListener('DOMContentLoaded', loadProducts);
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+      autoRefreshData(); // Iniciar actualizaciones automáticas
+    });
   </script>
 </body>
 </html>
