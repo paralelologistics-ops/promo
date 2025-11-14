@@ -486,7 +486,7 @@
               <span class="discount-badge">${prod.descuento}% OFF</span>
             </div>
             <span class="free-shipping">ENVÍO GRATIS</span>
-            <a href="https://wa.me/573011951675?text=Hola%20Paralelo,%20quiero%20comprar%20${encodeURIComponent(prod.referencia)}%20(Talla:%20${encodeURIComponent(prod.talla)})%20de%20el%20BLACK%20FRIDAY%20PARALELO" 
+            <a href="https://wa.me/573011951675?text=Hola%20Paralelo,%20quiero%20comprar%20${encodeURIComponent(prod.referencia)}%20(Talla:%20${encodeURIComponent(prod.talla)})%20del%20BLACK%20FRIDAY%20PARALELO" 
                class="buy-button">¡LO QUIERO!</a>
           </div>
         </div>
@@ -519,9 +519,22 @@
         }, 300);
       });
     }
+
+    // ==== AGREGAR ESTA FUNCIÓN ==== //
+    // Función para actualización automática cada 5 minutos
+    function autoRefreshData() {
+      // Actualizar datos cada 5 minutos (300,000 milisegundos)
+      setInterval(loadProducts, 300000);
+    }
+    // ============================== //
     
+    // ==== MODIFICAR ESTA LÍNEA ==== //
     // Cargar productos cuando la página esté lista
-    document.addEventListener('DOMContentLoaded', loadProducts);
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+      autoRefreshData(); // Iniciar actualizaciones automáticas
+    });
+    // ============================== //
   </script>
 </body>
 </html>
