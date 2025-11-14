@@ -229,9 +229,9 @@
     
     .current-price {
       font-weight: bold;
-      color: var(--black);
+      color: var(--black); /* CAMBIADO A NEGRO */
       font-size: 1.3rem;
-      background: var(--white);
+      background: var(--white); /* FONDO BLANCO PARA MEJOR CONTRASTE */
       padding: 2px 6px;
       border-radius: 4px;
     }
@@ -247,7 +247,7 @@
     }
     
     .free-shipping {
-      background-color: var(--black);
+      background-color: var(--black); /* CAMBIADO A NEGRO */
       color: var(--white);
       padding: 0.5rem;
       border-radius: 4px;
@@ -260,7 +260,7 @@
     
     .buy-button {
       display: block;
-      background: var(--black);
+      background: var(--black); /* CAMBIADO A NEGRO */
       color: var(--white);
       text-align: center;
       padding: 0.75rem;
@@ -309,24 +309,6 @@
       background: var(--gray-dark);
       border-radius: 8px;
       margin: 1rem;
-      border: 1px solid var(--primary);
-    }
-
-    .error-details {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: var(--black);
-      border-radius: 4px;
-      font-size: 0.9rem;
-      text-align: left;
-    }
-
-    .debug-info {
-      background: var(--gray-dark);
-      padding: 1rem;
-      margin: 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
     }
     
     @media (max-width: 768px) {
@@ -392,12 +374,6 @@
     </div>
   </div>
 
-  <!-- Información de debug (oculta por defecto) -->
-  <div class="debug-info" id="debugInfo" style="display: none;">
-    <h3>Información de Depuración</h3>
-    <div id="debugContent"></div>
-  </div>
-
   <a href="https://wa.me/573011951675?text=Hola%20Paralelo,%20quiero%20más%20información%20sobre%20la%20BLACK%20FRIDAY%20PARALELO" class="whatsapp-float">💬</a>
 
   <script>
@@ -427,61 +403,33 @@
     
     // Actualizar la cuenta regresiva cada segundo
     const countdownTimer = setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Función para mostrar información de debug
-    function showDebugInfo(info) {
-      const debugInfo = document.getElementById('debugInfo');
-      const debugContent = document.getElementById('debugContent');
-      debugContent.innerHTML = info;
-      debugInfo.style.display = 'block';
-    }
+    updateCountdown(); // Ejecutar inmediatamente
     
     // Función para cargar productos desde Google Sheets
     async function loadProducts() {
       try {
-        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A';
-        const sheetName = 'Promo';
-        const apiKey = 'AIzaSyAn_p-H3rZlyEs7Wb7IOmEvbHoa6rBFBFU';
+        // Reemplaza esta URL con la URL de tu Google Sheets publicada
+        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A'; // Cambia esto por el ID de tu hoja
+        const sheetName = 'Promo'; // Nombre de la pestaña
+        const apiKey = 'AIzaSyAn_p-H3rZlyEs7Wb7IOmEvbHoa6rBFBFU'; // Necesitarás una API key de Google
         
-        // Agregar timestamp para evitar cache
-        const timestamp = new Date().getTime();
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}&timestamp=${timestamp}`;
-        
-        console.log('Intentando cargar datos desde:', url);
+        // URL para obtener los datos de la hoja en formato JSON
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
         
         const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
-        }
-        
         const data = await response.json();
         
-        // Mostrar información de debug
-        showDebugInfo(`
-          <p><strong>Estado:</strong> ✅ Datos cargados correctamente</p>
-          <p><strong>Filas encontradas:</strong> ${data.values ? data.values.length : 0}</p>
-          <p><strong>URL utilizada:</strong> ${url}</p>
-        `);
-        
+        // Procesar los datos
         const rows = data.values;
         if (!rows || rows.length < 2) {
-          document.getElementById('product-container').innerHTML = `
-            <div class="error">
-              <h3>No se encontraron productos</h3>
-              <p>La hoja de cálculo está vacía o no tiene datos.</p>
-              <div class="error-details">
-                <strong>Debug info:</strong><br>
-                - Sheet ID: ${sheetId}<br>
-                - API Key: ${apiKey ? '✅ Presente' : '❌ Faltante'}<br>
-                - Filas recibidas: ${rows ? rows.length : 0}
-              </div>
-            </div>
-          `;
+          document.getElementById('product-container').innerHTML = '<div class="error">No se encontraron productos</div>';
           return;
         }
         
+        // Obtener encabezados
+        const headers = rows[0];
+        
+        // Crear array de productos
         const productos = [];
         for (let i = 1; i < rows.length; i++) {
           const row = rows[i];
@@ -501,59 +449,27 @@
           }
         }
         
-        if (productos.length === 0) {
-          document.getElementById('product-container').innerHTML = `
-            <div class="error">
-              <h3>Productos sin imágenes</h3>
-              <p>Se encontraron productos pero no tienen URLs de imágenes válidas.</p>
-              <p>Verifica que la columna de fotos tenga URLs que empiecen con "http".</p>
-            </div>
-          `;
-          return;
-        }
-        
         renderProducts(productos);
         setupSearch(productos);
         
       } catch (error) {
         console.error('Error cargando productos:', error);
-        
-        let errorMessage = 'Error desconocido';
-        if (error.message.includes('Failed to fetch')) {
-          errorMessage = 'Error de conexión. Verifica tu internet o la API Key.';
-        } else if (error.message.includes('400')) {
-          errorMessage = 'Error 400: Solicitud incorrecta. Verifica el Sheet ID y API Key.';
-        } else if (error.message.includes('403')) {
-          errorMessage = 'Error 403: Acceso denegado. La API Key puede tener restricciones o la hoja no está compartida.';
-        } else if (error.message.includes('404')) {
-          errorMessage = 'Error 404: No se encontró la hoja. Verifica el Sheet ID.';
-        }
-        
         document.getElementById('product-container').innerHTML = `
           <div class="error">
             <h3>Error al cargar los productos</h3>
-            <p>${errorMessage}</p>
-            <div class="error-details">
-              <strong>Detalles técnicos:</strong><br>
-              ${error.message}<br><br>
-              <strong>Para solucionar:</strong><br>
-              1. Verifica que la hoja esté compartida como "Cualquier persona con el enlace"<br>
-              2. Revisa que la API Key no tenga restricciones de dominio<br>
-              3. Confirma que el Sheet ID sea correcto
-            </div>
+            <p>Por favor, verifica la conexión o intenta más tarde.</p>
           </div>
         `;
-        
-        showDebugInfo(`
-          <p><strong>Estado:</strong> ❌ Error al cargar datos</p>
-          <p><strong>Error:</strong> ${error.message}</p>
-          <p><strong>Tipo:</strong> ${errorMessage}</p>
-        `);
       }
     }
     
     function renderProducts(productos) {
       const container = document.getElementById('product-container');
+      
+      if (productos.length === 0) {
+        container.innerHTML = '<div class="error">No se encontraron productos</div>';
+        return;
+      }
       
       container.innerHTML = productos.map(prod => `
         <div class="product-card">
