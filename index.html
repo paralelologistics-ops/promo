@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLACK FRIDAY PARALELO | HASTA 60% OFF + ENVÍO GRATIS</title>
+  <style>
+    :root {
+      --primary: #E91E63;
+      --secondary: #B71C1C;
+      --dark: #212121;
+      --light: #f5f5f5;
+      --black: #000000;
+      --gray-dark: #333333;
+      --white: #FFFFFF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+    }
+    
+    .banner {
+      width: 100%;
+      height: 200px;
+      background-image: url('https://static.wixstatic.com/media/d0ce54_aee7f80f620b4f278247333f7ef558f5~mv2.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .header {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .logo-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+    
+    .header p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+    
+    .countdown {
+      background: var(--gray-dark);
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 500px;
+      border: 1px solid var(--primary);
+    }
+    
+    .countdown-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+    
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    
+    .countdown-item {
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.5rem;
+      border-radius: 5px;
+      min-width: 50px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    
+    .countdown-label {
+      font-size: 0.7rem;
+      display: block;
+      color: var(--white);
+    }
+    
+    .limited-offer {
+      font-style: italic;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem;
+      border-radius: 5px;
+      display: inline-block;
+      color: var(--white);
+    }
+    
+    .search-container {
+      padding: 1rem;
+      background: var(--gray-dark);
+      margin: 1rem auto;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    
+    #search-input {
+      width: 100%;
+      padding: 12px 20px;
+      border: 2px solid var(--primary);
+      border-radius: 25px;
+      font-size: 16px;
+      background: var(--black);
+      color: var(--white);
+    }
+    
+    #search-input::placeholder {
+      color: #aaa;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+    
+    .product-card {
+      background: var(--gray-dark);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #444;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(233, 30, 99, 0.3);
+    }
+    
+    .product-image {
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: var(--black);
+    }
+    
+    .product-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .product-info {
+      padding: 1.5rem;
+    }
+    
+    .product-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+    
+    .product-size {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .price-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .original-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 0.75rem;
+    }
+    
+    .current-price {
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+    
+    .discount-badge {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-left: 0.75rem;
+    }
+    
+    .free-shipping {
+      background-color: var(--secondary);
+      color: var(--white);
+      padding: 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+    
+    .buy-button {
+      display: block;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: var(--white);
+      text-align: center;
+      padding: 0.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: opacity 0.3s;
+    }
+    
+    .buy-button:hover {
+      opacity: 0.9;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: #25D366;
+      color: var(--white);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-decoration: none;
+      z-index: 100;
+    }
+    
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .countdown-timer {
+        flex-wrap: wrap;
+      }
+      
+      .banner {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner"></div>
+  
+  <div class="header">
+    <div class="logo-container">
+      <img src="https://static.wixstatic.com/media/d0ce54_32d30a8159fd44d4a26c62563d7bfc38~mv2.jpg" alt="Logo Paralelo">
+    </div>
+    <h1>BLACK FRIDAY PARALELO</h1>
+    <p>HASTA 60% DE DESCUENTO + ENVÍO GRATIS EN TODOS LOS PRODUCTOS</p>
+    
+    <div class="countdown">
+      <div class="countdown-title">¡OFERTA POR TIEMPO LIMITADO!</div>
+      <div class="countdown-timer" id="countdown">
+        <div class="countdown-item">
+          <span id="days">05</span>
+          <span class="countdown-label">DÍAS</span>
+        </div>
+        <div class="countdown-item">
+          <span id="hours">00</span>
+          <span class="countdown-label">HORAS</span>
+        </div>
+        <div class="countdown-item">
+          <span id="minutes">00</span>
+          <span class="countdown-label">MIN</span>
+        </div>
+        <div class="countdown-item">
+          <span id="seconds">00</span>
+          <span class="countdown-label">SEG</span>
+        </div>
+      </div>
+      <div class="limited-offer">Referencias y tallas seleccionadas - Hasta agotar existencias</div>
+    </div>
+  </div>
+
+  <div class="search-container">
+    <input type="text" id="search-input" placeholder="🔍 Buscar productos...">
+  </div>
+
+  <div class="container">
+    <div class="product-grid" id="product-container">
+      <div class="loading">Cargando productos...</div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/573001904859?text=Hola%20Paralelo,%20quiero%20más%20información%20sobre%20la%20SUPER%20PROMO%20PARALELO" class="whatsapp-float">💬</a>
+
+  <script>
+    // Configuración de la cuenta regresiva (5 días a partir de ahora)
+    const countdownDate = new Date();
+    countdownDate.setDate(countdownDate.getDate() + 5);
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById('days').textContent = days.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      
+      if (distance < 0) {
+        clearInterval(countdownTimer);
+        document.getElementById('countdown').innerHTML = '<div style="color:white;font-weight:bold;">¡LA PROMOCIÓN HA TERMINADO!</div>';
+      }
+    }
+    
+    // Actualizar la cuenta regresiva cada segundo
+    const countdownTimer = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Ejecutar inmediatamente
+    
+    // Función para cargar productos desde Google Sheets
+    async function loadProducts() {
+      try {
+        // Reemplaza esta URL con la URL de tu Google Sheets publicada
+        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A'; // Cambia esto por el ID de tu hoja
+        const sheetName = 'Promo'; // Nombre de la pestaña
+        const apiKey = 'TU_API_KEY_AQUI'; // Necesitarás una API key de Google
+        
+        // URL para obtener los datos de la hoja en formato JSON
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Procesar los datos
+        const rows = data.values;
+        if (!rows || rows.length < 2) {
+          document.getElementById('product-container').innerHTML = '<div class="error">No se encontraron productos</div>';
+          return;
+        }
+        
+        // Obtener encabezados
+        const headers = rows[0];
+        
+        // Crear array de productos
+        const productos = [];
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (row.length >= 5 && row[3] && row[3].startsWith('http')) {
+            const precioOriginal = parseFloat(row[4]?.replace(/[^\d.]/g, '')) || 0;
+            const precioDescuento = parseFloat(row[2]?.replace(/[^\d.]/g, '')) || 0;
+            const descuento = precioOriginal > 0 ? Math.round((1 - precioDescuento / precioOriginal) * 100) : 0;
+            
+            productos.push({
+              referencia: row[0] || 'Producto sin nombre',
+              talla: row[1] || 'Talla única',
+              precioOriginal: precioOriginal,
+              imagen: row[3],
+              precioDescuento: precioDescuento,
+              descuento: descuento
+            });
+          }
+        }
+        
+        renderProducts(productos);
+        setupSearch(productos);
+        
+      } catch (error) {
+        console.error('Error cargando productos:', error);
+        document.getElementById('product-container').innerHTML = `
+          <div class="error">
+            <h3>Error al cargar los productos</h3>
+            <p>Por favor, verifica la conexión o intenta más tarde.</p>
+          </div>
+        `;
+      }
+    }
+    
+    function renderProducts(productos) {
+      const container = document.getElementById('product-container');
+      
+      if (productos.length === 0) {
+        container.innerHTML = '<div class="error">No se encontraron productos</div>';
+        return;
+      }
+      
+      container.innerHTML = productos.map(prod => `
+        <div class="product-card">
+          <div class="product-image">
+            <img src="${prod.imagen}" alt="${prod.referencia}" loading="lazy"
+                 onerror="this.src='https://via.placeholder.com/300x300/333/fff?text=Imagen+no+disponible'">
+          </div>
+          <div class="product-info">
+            <div class="product-title">${prod.referencia}</div>
+            <div class="product-size">Talla: ${prod.talla}</div>
+            <div class="price-container">
+              <span class="original-price">$${prod.precioOriginal.toLocaleString()}</span>
+              <span class="current-price">$${prod.precioDescuento.toLocaleString()}</span>
+              <span class="discount-badge">${prod.descuento}% OFF</span>
+            </div>
+            <span class="free-shipping">ENVÍO GRATIS</span>
+            <a href="https://wa.me/573001904859?text=Hola%20Paralelo,%20quiero%20comprar%20${encodeURIComponent(prod.referencia)}%20(Talla:%20${encodeURIComponent(prod.talla)})%20de%20la%20SUPER%20PROMO%20PARALELO" 
+               class="buy-button">¡LO QUIERO!</a>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function setupSearch(productos) {
+      const searchInput = document.getElementById('search-input');
+      let searchTimeout;
+      
+      function filterProducts(searchTerm) {
+        if (!searchTerm) {
+          renderProducts(productos);
+          return;
+        }
+        
+        const term = searchTerm.toLowerCase();
+        const filtered = productos.filter(p => 
+          p.referencia.toLowerCase().includes(term) || 
+          p.talla.toLowerCase().includes(term)
+        );
+        
+        renderProducts(filtered);
+      }
+      
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          filterProducts(e.target.value);
+        }, 300);
+      });
+    }
+    
+    // Cargar productos cuando la página esté lista
+    document.addEventListener('DOMContentLoaded', loadProducts);
+  </script>
+</body>
+</html>
