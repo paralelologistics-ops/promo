@@ -229,8 +229,11 @@
     
     .current-price {
       font-weight: bold;
-      color: var(--primary);
+      color: var(--black); /* CAMBIADO A NEGRO */
       font-size: 1.3rem;
+      background: var(--white); /* FONDO BLANCO PARA MEJOR CONTRASTE */
+      padding: 2px 6px;
+      border-radius: 4px;
     }
     
     .discount-badge {
@@ -244,7 +247,7 @@
     }
     
     .free-shipping {
-      background-color: var(--secondary);
+      background-color: var(--black); /* CAMBIADO A NEGRO */
       color: var(--white);
       padding: 0.5rem;
       border-radius: 4px;
@@ -252,11 +255,12 @@
       font-weight: 500;
       display: inline-block;
       margin: 0.5rem 0;
+      border: 1px solid var(--primary);
     }
     
     .buy-button {
       display: block;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      background: var(--black); /* CAMBIADO A NEGRO */
       color: var(--white);
       text-align: center;
       padding: 0.75rem;
@@ -264,11 +268,13 @@
       text-decoration: none;
       font-weight: 500;
       margin-top: 1rem;
-      transition: opacity 0.3s;
+      transition: all 0.3s;
+      border: 1px solid var(--primary);
     }
     
     .buy-button:hover {
-      opacity: 0.9;
+      background: var(--primary);
+      transform: scale(1.05);
     }
     
     .whatsapp-float {
@@ -287,6 +293,22 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       text-decoration: none;
       z-index: 100;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+
+    .error {
+      text-align: center;
+      padding: 2rem;
+      color: var(--primary);
+      background: var(--gray-dark);
+      border-radius: 8px;
+      margin: 1rem;
     }
     
     @media (max-width: 768px) {
@@ -464,7 +486,7 @@
               <span class="discount-badge">${prod.descuento}% OFF</span>
             </div>
             <span class="free-shipping">ENVÍO GRATIS</span>
-            <a href="https://wa.me/573001904859?text=Hola%20Paralelo,%20quiero%20comprar%20${encodeURIComponent(prod.referencia)}%20(Talla:%20${encodeURIComponent(prod.talla)})%20de%20la%20SUPER%20PROMO%20PARALELO" 
+            <a href="https://wa.me/573011951675?text=Hola%20Paralelo,%20quiero%20comprar%20${encodeURIComponent(prod.referencia)}%20(Talla:%20${encodeURIComponent(prod.talla)})%20de%20la%20SUPER%20PROMO%20PARALELO" 
                class="buy-button">¡LO QUIERO!</a>
           </div>
         </div>
