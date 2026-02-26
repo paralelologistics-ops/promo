@@ -417,8 +417,7 @@ IG
 
   <script>
     // Configuración de la cuenta regresiva (5 días a partir de ahora)
-    const countdownDate = new Date();
-    countdownDate.setDate(countdownDate.getDate() + 5);
+    const countdownDate = new Date("2026-03-06T23:59:59").getTime();
     
     function updateCountdown() {
       const now = new Date().getTime();
