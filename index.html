@@ -331,6 +331,24 @@
   </style>
 </head>
 <body>
+  <div style="background:#ff2e7a;color:white;text-align:center;padding:10px;font-weight:bold;font-size:14px;position:sticky;top:0;z-index:9999;">
+🔥 BLACK FRIDAY - Hasta 60% OFF + Envío Gratis | Termina en <span id="countdown"></span>
+</div>
+
+<script>
+var end = new Date();
+end.setHours(end.getHours() + 48);
+
+function updateTimer() {
+  var now = new Date().getTime();
+  var distance = end - now;
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+}
+setInterval(updateTimer, 1000);
+</script>
   <div class="banner"></div>
   
   <div class="header">
