@@ -440,7 +440,15 @@
           <div class="product-info">
             <div class="product-title">${prod.referencia}</div>
             <div class="product-size">Talla: ${prod.talla}</div>
-            <div class="product-stock">Disponibles: ${prod.inventario}</div>
+            <div class="product-stock">
+  ${
+    prod.inventario === 1
+      ? "🔥 <strong>Última unidad disponible</strong>"
+      : prod.inventario <= 3
+      ? "⚠️ <strong>Pocas unidades disponibles</strong>"
+      : `Disponibles: ${prod.inventario}`
+  }
+</div>
             <div class="price-container">
               <span class="original-price">$${prod.precioOriginal.toLocaleString()}</span>
               <span class="current-price">$${prod.precioDescuento.toLocaleString()}</span>
