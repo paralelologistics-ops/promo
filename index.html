@@ -455,33 +455,41 @@ IG
         const headers = rows[0];
         
         // Crear array de productos
-        window.productos = [];
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (row.length >= 6 && row[3] && row[3].startsWith('http')) {
+       window.productos = [];
 
-  const precioOriginal = parseFloat(row[4]?.replace(/[^\d.]/g, '')) || 0;
-  const precioDescuento = parseFloat(row[2]?.replace(/[^\d.]/g, '')) || 0;
-  const inventario = parseInt(row[5]) || 0;  // 👈 ESTA ES LA CLAVE
+for (let i = 1; i < rows.length; i++) {
+  const row = rows[i];
 
-  const descuento = precioOriginal > 0 
-    ? Math.round((1 - precioDescuento / precioOriginal) * 100) 
+  if (!row) continue;
+
+  const referencia = row[0] || 'Producto sin nombre';
+  const talla = row[1] || 'Talla única';
+  const precioDescuento = parseFloat((row[2] || '').replace(/[^\d.]/g, '')) || 0;
+  const imagen = row[3] || '';
+  const precioOriginal = parseFloat((row[4] || '').replace(/[^\d.]/g, '')) || 0;
+  const inventario = parseInt(row[5]) || 0;
+
+  if (!imagen.startsWith('http')) continue;
+
+  const descuento = precioOriginal > 0
+    ? Math.round((1 - precioDescuento / precioOriginal) * 100)
     : 0;
 
-  productos.push({
-    referencia: row[0] || 'Producto sin nombre',
-    talla: row[1] || 'Talla única',
-    precioOriginal: precioOriginal,
-    imagen: row[3],
-    precioDescuento: precioDescuento,
-    descuento: descuento,
-    inventario: inventario   // 👈 ESTA LÍNEA ES OBLIGATORIA
+  window.productos.push({
+    referencia,
+    talla,
+    precioOriginal,
+    imagen,
+    precioDescuento,
+    descuento,
+    inventario
   });
 }
+
+renderProducts(window.productos);
+setupSearch(window.productos);
         
-        renderProducts(productos);
-        setupSearch(productos);
-        
+               
       } catch (error) {
         console.error('Error cargando productos:', error);
         document.getElementById('product-container').innerHTML = `
