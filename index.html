@@ -242,21 +242,21 @@
     .error { text-align: center; padding: 2rem; color: var(--primary); background: var(--gray-dark); border-radius: 8px; margin: 1rem; }
 
     .category-btn {
-      background-color: var(--primary);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      padding: 6px 12px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.2s;
-      margin: 0 5px 5px 0;
-    }
-    
-    .category-btn:hover {
-      background-color: var(--secondary);
-      transform: scale(1.05);
-    }
+  background-color: var(--black); /* ahora el fondo es negro */
+  color: var(--white);
+  border: 1px solid var(--primary); /* opcional: bordes visibles */
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin: 0 5px 5px 0;
+}
+
+.category-btn:hover {
+  background-color: var(--primary); /* cambia a rosa al pasar el mouse */
+  transform: scale(1.05);
+}
 
     @media (max-width: 768px) {
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
