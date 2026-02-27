@@ -495,7 +495,7 @@ IG
         container.innerHTML = '<div class="error">No se encontraron productos</div>';
         return;
       }
-      
+      console.log(productos);
       container.innerHTML = productos.map(prod => `
         <div class="product-card">
           <div class="product-image">
