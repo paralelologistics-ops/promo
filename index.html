@@ -431,19 +431,25 @@ IG
     updateCountdown(); // Ejecutar inmediatamente
     
     // Función para cargar productos desde Google Sheets
-    function loadProducts() {
-  google.script.run
-    .withSuccessHandler(function(productos) {
-      renderProducts(productos);
-      setupSearch(productos);
-      generarBotonesCategorias(productos);
-    })
-    .withFailureHandler(function(error) {
-      document.getElementById('product-container').innerHTML =
-        '<div class="error">Error cargando productos</div>';
-    })
-    .obtenerProductosPromo();
-}
+    async function loadProducts() {
+      try {
+        // Reemplaza esta URL con la URL de tu Google Sheets publicada
+        const sheetId = '1V5QWA5F_BCVrYYMiDjnFKKlJUgUHMEpUJt21rB7_A5A'; // Cambia esto por el ID de tu hoja
+        const sheetName = 'Promo'; // Nombre de la pestaña
+        const apiKey = 'AIzaSyAn_p-H3rZlyEs7Wb7IOmEvbHoa6rBFBFU'; // Necesitarás una API key de Google
+        
+        // URL para obtener los datos de la hoja en formato JSON
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Procesar los datos
+        const rows = data.values;
+        if (!rows || rows.length < 2) {
+          document.getElementById('product-container').innerHTML = '<div class="error">No se encontraron productos</div>';
+          return;
+        }
         
         // Obtener encabezados
         const headers = rows[0];
