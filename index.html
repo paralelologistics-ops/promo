@@ -507,6 +507,7 @@ for (let i = 1; i < rows.length; i++) {
 
 renderProducts(window.productos);
 setupSearch(window.productos);
+renderCategoryButtons(window.productos); // Generar botones de categoría aquí
         
                
       } catch (error) {
@@ -589,10 +590,9 @@ setupSearch(window.productos);
     // ==== MODIFICAR ESTA LÍNEA ==== //
     // Cargar productos cuando la página esté lista
     document.addEventListener('DOMContentLoaded', function() {
-  loadProducts().then(() => {
-    renderCategoryButtons(window.productos); // Genera botones de categoría
-    autoRefreshData(); // Mantener actualizaciones automáticas
-  });
+  loadProducts();
+  autoRefreshData(); // mantener actualización automática
+});
 });
 
 // Función para crear los botones de categoría
