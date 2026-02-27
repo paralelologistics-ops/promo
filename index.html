@@ -467,7 +467,7 @@ for (let i = 1; i < rows.length; i++) {
   const precioDescuento = parseFloat((row[2] || '').replace(/[^\d.]/g, '')) || 0;
   const imagen = row[3] || '';
   const precioOriginal = parseFloat((row[4] || '').replace(/[^\d.]/g, '')) || 0;
-  const inventario = parseInt(row[5]) || 0;
+  const inventario = parseInt(row[11]) || 0;
 
   if (!imagen.startsWith('http')) continue;
 
