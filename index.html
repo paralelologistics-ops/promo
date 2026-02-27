@@ -458,21 +458,26 @@ IG
         window.productos = [];
         for (let i = 1; i < rows.length; i++) {
           const row = rows[i];
-          if (row.length >= 5 && row[3] && row[3].startsWith('http')) {
-            const precioOriginal = parseFloat(row[4]?.replace(/[^\d.]/g, '')) || 0;
-            const precioDescuento = parseFloat(row[2]?.replace(/[^\d.]/g, '')) || 0;
-            const descuento = precioOriginal > 0 ? Math.round((1 - precioDescuento / precioOriginal) * 100) : 0;
-            
-            productos.push({
-              referencia: row[0] || 'Producto sin nombre',
-              talla: row[1] || 'Talla única',
-              precioOriginal: precioOriginal,
-              imagen: row[3],
-              precioDescuento: precioDescuento,
-              descuento: descuento
-            });
-          }
-        }
+          if (row.length >= 6 && row[3] && row[3].startsWith('http')) {
+
+  const precioOriginal = parseFloat(row[4]?.replace(/[^\d.]/g, '')) || 0;
+  const precioDescuento = parseFloat(row[2]?.replace(/[^\d.]/g, '')) || 0;
+  const inventario = parseInt(row[5]) || 0;  // 👈 ESTA ES LA CLAVE
+
+  const descuento = precioOriginal > 0 
+    ? Math.round((1 - precioDescuento / precioOriginal) * 100) 
+    : 0;
+
+  productos.push({
+    referencia: row[0] || 'Producto sin nombre',
+    talla: row[1] || 'Talla única',
+    precioOriginal: precioOriginal,
+    imagen: row[3],
+    precioDescuento: precioDescuento,
+    descuento: descuento,
+    inventario: inventario   // 👈 ESTA LÍNEA ES OBLIGATORIA
+  });
+}
         
         renderProducts(productos);
         setupSearch(productos);
