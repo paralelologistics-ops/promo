@@ -326,6 +326,22 @@
       
       .banner {
         height: 150px;
+        .category-btn {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin: 0 5px 5px 0;
+}
+
+.category-btn:hover {
+  background-color: var(--secondary);
+  transform: scale(1.05);
+}
       }
     }
   </style>
@@ -376,6 +392,9 @@
     </p>
   </div>
   <div class="container">
+    <div class="category-filters" style="text-align:center;margin:1rem 0;">
+  <!-- Los botones de categoría aparecerán aquí -->
+</div>
     <div class="product-grid" id="product-container">
       <div class="loading">Cargando productos...</div>
     </div>
@@ -570,9 +589,39 @@ setupSearch(window.productos);
     // ==== MODIFICAR ESTA LÍNEA ==== //
     // Cargar productos cuando la página esté lista
     document.addEventListener('DOMContentLoaded', function() {
-      loadProducts();
-      autoRefreshData(); // Iniciar actualizaciones automáticas
-    });
+  loadProducts().then(() => {
+    renderCategoryButtons(window.productos); // Genera botones de categoría
+    autoRefreshData(); // Mantener actualizaciones automáticas
+  });
+});
+
+// Función para crear los botones de categoría
+function renderCategoryButtons(productos) {
+  const container = document.querySelector('.category-filters');
+  if (!productos || productos.length === 0) return;
+
+  // Obtener categorías únicas
+  const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
+
+  // Botón "Todos"
+  const allBtn = document.createElement('button');
+  allBtn.textContent = 'Todos';
+  allBtn.className = 'category-btn';
+  allBtn.onclick = () => renderProducts(productos);
+  container.appendChild(allBtn);
+
+  // Botones por categoría
+  categoriasUnicas.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.textContent = cat;
+    btn.className = 'category-btn';
+    btn.onclick = () => {
+      const filtrados = productos.filter(p => p.categoria === cat);
+      renderProducts(filtrados);
+    };
+    container.appendChild(btn);
+  });
+}
     // ============================== //
   </script>
 </body>
